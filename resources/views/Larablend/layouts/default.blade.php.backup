@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@yield('page_title')</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <!-- Including Bootswatch: Lux -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/paper-dashboard.css?v=2.1.1') }}">
+    <!-- Including Font Awesome Kit -->
+    <script src="https://kit.fontawesome.com/1c781ab882.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+</head>
+<body>
+<section id="header" class="bg-dark text-light">
+    <header class="container py-3">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <a href="/" class="navbar-brand text-light">The Grand Placid</a>
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col-auto">
+                <a href="/service/index" class="mx-2 text-light">Services</a>
+                <a href="/service/create" class="mx-2 text-light">Create Services</a>
+                <a href="/service_category/index" class="mx-2 text-light">Service Categories</a>
+                <a href="/service_category/create" class="mx-2 text-light">Create Service Categories</a>
+            </div>
+        </div>
+    </header>
+</section>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-uppercase mb-0">@yield('page_title')</h2>
+                </div>
+                <div class="card-body">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#index-table').DataTable();
+    } );
+</script>
+</body>
+</html>
+
