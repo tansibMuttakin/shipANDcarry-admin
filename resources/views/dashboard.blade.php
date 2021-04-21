@@ -3,45 +3,6 @@
 <div class="row" style="column-gap:2em;">
     <div class="card" style="width:16rem;">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-circle-10 text-warning"></i>
-                </div>
-                <div>
-                    <p class="card-category">Total Registered User</p><br />
-                    <p class="card-title">{{count($users_data->users)}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width:16rem;">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-circle-10 text-warning"></i>
-                </div>
-                <div>
-                    <p class="card-category">Total Registered Active User</p>
-                    <p class="card-title">{{count($users_data->users_active)}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width:16rem;">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-circle-10 text-warning"></i>
-                </div>
-                <div>
-                    <p class="card-category">Total Registered Inactive User </p>
-                    <p class="card-title">{{count($users_data->users_inactive)}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width:16rem;">
-        <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div class="icon-big text-center icon-warning">
                     <i class="nc-icon nc-spaceship text-warning"></i>
@@ -53,6 +14,33 @@
             </div>
         </div>
     </div>
+    <div class="card" style="width:16rem;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="icon-big text-center icon-warning">
+                    <i class="nc-icon nc-circle-10 text-warning"></i>
+                </div>
+                <div>
+                    <p class="card-category">Total Registered Active Shipper</p>
+                    <p class="card-title">{{count($shippers_data->shippers_active)}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="width:16rem;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="icon-big text-center icon-warning">
+                    <i class="nc-icon nc-circle-10 text-warning"></i>
+                </div>
+                <div>
+                    <p class="card-category">Total Registered Inactive Shipper </p>
+                    <p class="card-title">{{count($shippers_data->shippers_inactive)}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card" style="width:16rem;">
         <div class="card-body">
             <div class="d-flex justify-content-between">

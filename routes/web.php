@@ -27,19 +27,15 @@ Route::prefix('dashboard')->group(function () {
         $shippers = App\Models\Shipper::orderBy('created_at','desc')->get();
         $shippers_company = App\Models\Shipper::where('type','company')->get();
         $shippers_individual = App\Models\Shipper::where('type','individual')->get();
+        $shippers_active = App\Models\Shipper::leftJoin('profiles','shippers.profile_id','profiles.id')->where('active',1)->get();
+        $shippers_inactive = App\Models\Shipper::leftJoin('profiles','shippers.profile_id','profiles.id')->where('active',0)->get();
         $shippers_data = new \stdClass();
         $shippers_data->shippers = $shippers;
         $shippers_data->shippers_company = $shippers_company;
         $shippers_data->shippers_individual = $shippers_individual;
+        $shippers_data->shippers_active = $shippers_active;
+        $shippers_data->shippers_inactive = $shippers_inactive;
     
-        //users
-        $users = App\Models\User::all();
-        $users_active = App\Models\User::with('shipper')->get();
-        $users_inactive = App\Models\User::with('shipper')->where('type','inactive')->get();
-        $users_data = new \stdClass();
-        $users_data->users = $users;
-        $users_data->users_inactive = $users_inactive;
-        $users_data->users_active = $users_active;
 
         //carriers
         $carriers = App\Models\Carrier::orderBy('created_at','desc')->get();
@@ -59,7 +55,6 @@ Route::prefix('dashboard')->group(function () {
 
         return view('dashboard')
         ->with('shippers_data',$shippers_data)
-        ->with('users_data',$users_data)
         ->with('carriers_data',$carriers_data)
         ->with('drivers',$drivers)
         ->with('vehicles',$vehicles);
