@@ -19,10 +19,9 @@
                         <tr>
                             <td class="pl-0">{{$carrierRequest->carrier->name?$carrierRequest->carrier->name:'N/A'}}</td>
                             <td class="pl-0">{{$carrierRequest->carrier->type?$carrierRequest->carrier->type:'N/A'}}</td>
-                            <td class="pl-0">{{$carrierRequest->status->title?$carrierRequest->status->title:'N/A'}}</td>
+                            <td class="pl-0">{{$carrierRequest->title?$carrierRequest->title:'N/A'}}</td>
                             <td class="pl-0 text-center">
-                                <a href="/dashboard/shipper/statusApprove/{{$carrierRequest->carrier_id}}" class="action">approve</i></a>
-                                <a href="/dashboard/shipper/statusDisapprove/{{$carrierRequest->carrier_id}}" class="action" >disapprove</i></a>
+                                <a href="/dashboard/carrier-request/editStatus/{{$carrierRequest->carrier_id}}" class="action">edit</i></a>
                             </td>
                         </tr>
                     @endforeach

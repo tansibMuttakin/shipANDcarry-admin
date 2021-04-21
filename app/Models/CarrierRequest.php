@@ -28,8 +28,8 @@ class CarrierRequest extends Model
     }
 
     //status
-    public function status()
-    {
-        return $this->timeline()->leftJoin('statuses','timelines.status_id','=','statuses.id');
-    }
+    // public function status()
+    // {
+    //     return $this->timeline()->leftJoin('statuses','timelines.status_id','=','statuses.id');
+    // }
 }
