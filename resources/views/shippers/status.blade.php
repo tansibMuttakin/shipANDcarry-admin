@@ -23,8 +23,8 @@
                             <td class="pl-0">{{$shipper->type?$shipper->type:'N/A'}}</td>
                             <td class="pl-0">{{$shipper->profile->active?'approved':'disapproved'}}</td>
                             <td class="pl-0 text-center">
-                                <a href="/dashboard/shipper/statusUpdate/{{$shipper->profile_id}}" class="action">approve</i></a>
-                                <a href="/dashboard/shipper/statusUpdate/{{$shipper->profile_id}}" class="action" >disapprove</i></a>
+                                <a href="/dashboard/shipper/statusApprove/{{$shipper->profile_id}}" class="action">approve</i></a>
+                                <a href="/dashboard/shipper/statusDisapprove/{{$shipper->profile_id}}" class="action" >disapprove</i></a>
                             </td>
                         </tr>
                     @endforeach

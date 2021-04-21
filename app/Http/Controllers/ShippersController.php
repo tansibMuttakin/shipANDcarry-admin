@@ -19,14 +19,15 @@ class ShippersController extends LarablendCrudController
         $shippers = Shipper::all();
         return view('shippers.status',['shippers' => $shippers]);
     }
-    public static function statusUpdate($model, $id){
+    public static function statusDisapprove($model, $id){
         $profile = Profile::findOrfail($id);
-        if ($profile->active) {
-            $profile->active = 0;
-        }
-        else {
-            $profile->active = 1;
-        }
+        $profile->active = 0;
+        $profile->save();
+        return redirect()->back()->with('message','Status Updated');
+    }
+    public static function statusApprove($model, $id){
+        $profile = Profile::findOrfail($id);
+        $profile->active = 1;
         $profile->save();
         return redirect()->back()->with('message','Status Updated');
     }
