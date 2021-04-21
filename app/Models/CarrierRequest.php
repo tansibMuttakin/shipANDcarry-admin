@@ -26,4 +26,10 @@ class CarrierRequest extends Model
     {
         return $this->belongsTo(Timeline::class);
     }
+
+    //status
+    public function status()
+    {
+        return $this->timeline()->leftJoin('statuses','timelines.status_id','=','statuses.id');
+    }
 }
