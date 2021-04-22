@@ -19,8 +19,26 @@ use Duoneos\Larablend\Http\Controllers\LarablendCrudController;
 
 class CarriersController extends LarablendCrudController
 {
+    public static function withoutTruck_WithoutDriver(){
+        $carriers_without_driver = Carrier::leftJoin('booking_requests','booking_requests.carrier_id','carriers.id')
+        ->where('driver_id',null)
+        ->get();
+        $carriers_without_truck = Carrier::leftJoin('booking_requests','booking_requests.carrier_id','carriers.id')
+        ->where('vehicle_id',null)
+        ->get();
+
+        return view('carriers.withoutTruckDriver',[
+            'carriers_without_driver' => $carriers_without_driver,
+            'carriers_without_truck' => $carriers_without_truck
+        ]);
+    }
+
     public static function history(){
-        $carriers = Carrier::all();
+        $carriers = Carrier::with('profile','location')
+        ->join('booking_requests','booking_requests.carrier_id','carriers.id')
+        ->join('drivers','booking_requests.driver_id','drivers.id')
+        ->get();
+        dd($carriers);
         return view('carriers.history',['carriers' => $carriers]);
     }
 
