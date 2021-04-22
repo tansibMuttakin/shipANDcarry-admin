@@ -6,6 +6,7 @@ use App\Models\BookingRequest;
 use App\Models\BookingRequestCarrier;
 use App\Models\BookingRequestVehicle;
 use App\Models\Vehicle;
+use App\Models\Status;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -91,5 +92,25 @@ class BookingRequestsController extends LarablendCrudController
         }
         $response->data = $new_data;
         return response()->json($response);
+    }
+
+    public static function status(){
+        $bookingRequests = BookingRequest::with('carrier','shipper','driver','request_status')
+        ->get();
+        return view('bookingRequest.status',['bookingRequests' => $bookingRequests]);
+    }
+    public static function editStatus($model, $id){
+        // $carrierRequest = CarrierRequest::with('carrier','timeline','status')->where('id',$id)->first();
+        $bookingRequest = BookingRequest::with('carrier','shipper','driver','request_status')
+        ->where('id',$id)->first();
+        $statuses = Status::all();
+        return view('bookingRequest.statusEdit',['bookingRequest' => $bookingRequest,'statuses' => $statuses]);
+    }
+    public static function updateStatus(Request $request,$model, $id){
+        // $carrierRequest = CarrierRequest::with('carrier','timeline','status')->where('id',$id)->first();
+        $bookingRequest = BookingRequest::find($id);
+        $bookingRequest->request_status_id_status = $request->status_id;
+        $bookingRequest->save();
+        return redirect('/dashboard/booking_request/status')->with('message','Booking request status updated');
     }
 }
