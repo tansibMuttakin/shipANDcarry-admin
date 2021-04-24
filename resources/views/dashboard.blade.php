@@ -127,12 +127,16 @@
             <table cellspacing="5" cellpadding="5">
                 <tbody>
                     <tr>
-                        <td>Minimum age:</td>
-                        <td><input type="text" id="min" name="min"></td>
-                    </tr>
-                    <tr>
-                        <td>Maximum age:</td>
-                        <td><input type="text" id="max" name="max"></td>
+                        <td>Sort BY:</td>
+                        <td>
+                            <select name="range" id="">
+                                <option value="" selected>Choose...</option>
+                                <option value="last_day">Last Day</option>
+                                <option value="last_week">Last Week</option>
+                                <option value="last_month">Last Month</option>
+                                <option value="last_year">Last year</option>
+                            </select>
+                        </td>
                     </tr>
                 </tbody>
             </table>

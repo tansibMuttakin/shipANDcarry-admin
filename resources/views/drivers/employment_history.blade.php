@@ -14,12 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <tr>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
-                        </tr>
+                    
                 </tbody>
             </table>
         </div>

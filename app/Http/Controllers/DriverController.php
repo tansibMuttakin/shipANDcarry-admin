@@ -19,6 +19,18 @@ class DriverController extends LarablendCrudController{
         return view('drivers.employment_history');
     }
 
+    public static function force_assign_view(){
+        $trips = BookingRequest::with('carrier','vehicle.vehicle_brand','vehicle.vehicle_model')
+        ->get();
+        $drivers = Driver::all();
+        return view('drivers.driver_force_assign')
+        ->with('trips',$trips)
+        ->with('drivers',$drivers);
+    }
+    public static function force_assign_trip_driver(Request $request, $model,$trip_id){
+        dd($trip_id,$request);
+    }
+
     public static function driver_with_AppNoapp(){
         $drivers_with_app = Driver::with('profile',)->where('token','!=',null)->get();
         $drivers_with_Noapp = Driver::with('profile')->where('token','=',null)->get();
