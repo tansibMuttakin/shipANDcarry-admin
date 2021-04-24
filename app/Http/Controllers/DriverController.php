@@ -9,9 +9,14 @@ use Duoneos\Larablend\Http\Controllers\LarablendCrudController;
 
 class DriverController extends LarablendCrudController{
 
-    public static function history(){
+    public static function trip_history(){
         $drivers_history = BookingRequest::with('driver','carrier','vehicle.vehicle_brand','vehicle.vehicle_model','dropoff_address','pickup_address')->get();
         return view('drivers.history',['drivers_history' => $drivers_history]);
+    }
+    public static function employment_history(){
+        // $drivers_history = DriverEmployment::with('driver','carrier')->get();
+        // return view('drivers.employment_history',['drivers_history' => $drivers_history]);
+        return view('drivers.employment_history');
     }
 
     public static function driver_with_AppNoapp(){

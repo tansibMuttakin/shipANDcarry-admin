@@ -34,7 +34,7 @@ class CarriersController extends LarablendCrudController
     }
 
     public static function history(){
-        $carriers = Carrier::withCount('booking_requests.vehicle')->get();
+        $carriers = Carrier::with('booking_requests')->get();
         return view('carriers.history',['carriers' => $carriers]);
     }
 

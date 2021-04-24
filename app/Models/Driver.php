@@ -33,4 +33,8 @@ class Driver extends Model
     {
         return $this->belongsTo(Carrier::class);
     }
+    public function driver_employment()
+    {
+        return $this->belongsTo(DriverEmployment::class);
+    }
 }
