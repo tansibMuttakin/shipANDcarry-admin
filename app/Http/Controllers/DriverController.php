@@ -27,8 +27,8 @@ class DriverController extends LarablendCrudController{
         ->with('trips',$trips)
         ->with('drivers',$drivers);
     }
-    public static function force_assign_trip_driver(Request $request, $model,$trip_id){
-        dd($trip_id,$request);
+    public static function force_assign_trip_driver(Request $request, $model){
+        dd($request);
     }
 
     public static function driver_with_AppNoapp(){

@@ -129,7 +129,7 @@
                     <tr>
                         <td>Sort BY:</td>
                         <td>
-                            <select name="range" id="">
+                            <select name="range" onchange="filter(event)" id="shipper">
                                 <option value="" selected>Choose...</option>
                                 <option value="last_day">Last Day</option>
                                 <option value="last_week">Last Week</option>
@@ -173,6 +173,22 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Carriers</h4>
         <div class="card-body">
+            <table cellspacing="5" cellpadding="5">
+                <tbody>
+                    <tr>
+                        <td>Sort BY:</td>
+                        <td>
+                            <select name="range" onchange="filter(event)" id="carrier">
+                                <option value="" selected>Choose...</option>
+                                <option value="last_day">Last Day</option>
+                                <option value="last_week">Last Week</option>
+                                <option value="last_month">Last Month</option>
+                                <option value="last_year">Last year</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <table id="carriers" class="table" style="width:100%">
                 <thead>
                     <tr>
@@ -204,6 +220,22 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Drivers</h4>
         <div class="card-body">
+            <table cellspacing="5" cellpadding="5">
+                <tbody>
+                    <tr>
+                        <td>Sort BY:</td>
+                        <td>
+                            <select name="range" onchange="filter(event)" id="driver">
+                                <option value="" selected>Choose...</option>
+                                <option value="last_day">Last Day</option>
+                                <option value="last_week">Last Week</option>
+                                <option value="last_month">Last Month</option>
+                                <option value="last_year">Last year</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <table id="drivers" class="table" style="width:100%">
                 <thead>
                     <tr>
@@ -241,6 +273,22 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Vehicles</h4>
         <div class="card-body">
+            <table cellspacing="5" cellpadding="5">
+                <tbody>
+                    <tr>
+                        <td>Sort BY:</td>
+                        <td>
+                            <select name="range" onchange="filter(event)" id="vehicle">
+                                <option value="" selected>Choose...</option>
+                                <option value="last_day">Last Day</option>
+                                <option value="last_week">Last Week</option>
+                                <option value="last_month">Last Month</option>
+                                <option value="last_year">Last year</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <table id="vehicles" class="table" style="width:100%">
                 <thead>
                     <tr>
@@ -287,4 +335,13 @@ $(document).ready(function() {
     
     
 } );
+function filter(event){
+    axios.get(`/dashboard/${event.target.id}/sort_table/${event.target.value}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      }) 
+}
 @endsection

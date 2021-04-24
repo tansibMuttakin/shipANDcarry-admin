@@ -59,6 +59,7 @@ Route::prefix('dashboard')->group(function () {
         ->with('drivers',$drivers)
         ->with('vehicles',$vehicles);
     });
+    
 });
 Route::get('/shippers-history', function () {
     return view('shippers.history');
