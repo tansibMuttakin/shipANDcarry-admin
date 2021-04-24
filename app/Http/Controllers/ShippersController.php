@@ -12,7 +12,7 @@ use Duoneos\Larablend\Http\Controllers\LarablendCrudController;
 class ShippersController extends LarablendCrudController
 {
     public static function history(){
-        $bookings = BookingRequest::all();
+        $bookings = BookingRequest::with('shipper','carrier','driver','pickup_address','dropoff_address')->get();
         return view('shippers.history',['bookings' => $bookings]);
     }
     public static function status(){
