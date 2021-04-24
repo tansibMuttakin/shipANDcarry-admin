@@ -8,28 +8,18 @@
                 <thead>
                     <tr>
                         <th class="pl-0">Carrier Name</th>
-                        <th class="pl-0">Type</th>
-                        <th class="pl-0">Trip NO</th>
-                        <th class="pl-0">Driver Name</th>
-                        <th class="pl-0">Vehicle Brand</th>
-                        <th class="pl-0">Vehicle Model</th>
-                        <th class="pl-0">Pickup Address</th>
-                        <th class="pl-0">Dropoff Address</th>
-                        <th class="pl-0">Dropoff Time</th>
+                        <th class="pl-0">Booking Requests</th>
+                        <th class="pl-0">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($carriers as $carrier)
                         <tr>
                             <td class="pl-0">{{$carrier->name}}</td>
-                            <td class="pl-0">{{$carrier->type}}</td>
-                            <td class="pl-0">{{$carrier->trip_no}}</td>
-                            <td class="pl-0">{{$carrier->name}}</td>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
-                            <td class="pl-0"></td>
+                            <td class="pl-0">{{$carrier->booking_requests_count}}</td>
+                            <td class="pl-0">
+                                <a href="/dashboard/carrier/viewHistory/{{$carrier->id}}" class="action">view details</i></a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
