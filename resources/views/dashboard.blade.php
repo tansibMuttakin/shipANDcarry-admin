@@ -210,6 +210,7 @@
                         <th class="pl-0">Address</th>
                         <th class="pl-0">Driving License</th>
                         <th class="pl-0">Registered By</th>
+                        <th class="pl-0">Status</th>
                         <th class="pl-0">Date</th>
                     </tr>
                 </thead>
@@ -223,6 +224,7 @@
                             <td class="pl-0">{{$driver->address->address_line_1?$driver->address->address_line_1:'n/a'}}</td>
                             <td class="pl-0">{{$driver->driving_license_no?$driver->driving_license_no:'n/a'}}</td>
                             <td class="pl-0">{{$driver->registered_by_carrier?'carrier':'self-registered'}}</td>
+                            <td class="pl-0">{{$driver->profile->active?'active':'inactive'}}</td>
                             <td class="pl-0">{{$driver->created_at?$driver->created_at:'n/a'}}</td>
                         </tr>
                     @endforeach
@@ -245,7 +247,7 @@
                         <th class="pl-0">Reg NO</th>
                         <th class="pl-0">BRTA NO</th>
                         <th class="pl-0">Fitness NO</th>
-                        <th class="pl-0">Address</th>
+                        <th class="pl-0">Location</th>
                         <th class="pl-0">On Trip</th>
                         <th class="pl-0">Reg Date</th>
                     </tr>
@@ -260,7 +262,7 @@
                             <td class="pl-0">{{$vehicle->registration_no?$vehicle->registration_no:'n/a'}}</td>
                             <td class="pl-0">{{$vehicle->brta_certificate_no?$vehicle->brta_certificate_no:'n/a'}}</td>
                             <td class="pl-0">{{$vehicle->fitness_certificate_no?$vehicle->fitness_certificate_no:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->address->address_line_1?$vehicle->address->address_line_1:'n/a'}}</td>
+                            <td class="pl-0">{{$vehicle->address->address_line_1?$vehicle->address->city:'n/a'}}</td>
                             <td class="pl-0">{{$vehicle->onTrip?'yes':'no'}}</td>
                             <td class="pl-0">{{$vehicle->created_at?$vehicle->created_at:'n/a'}}</td>
                         </tr>

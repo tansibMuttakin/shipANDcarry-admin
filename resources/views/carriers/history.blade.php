@@ -8,6 +8,7 @@
                 <thead>
                     <tr>
                         <th class="pl-0">Carrier Name</th>
+                        <th class="pl-0">vehicle Brand</th>
                         <th class="pl-0">Booking Requests</th>
                         <th class="pl-0">Action</th>
                     </tr>
