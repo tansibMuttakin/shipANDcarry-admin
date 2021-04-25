@@ -19,6 +19,20 @@ use Duoneos\Larablend\Http\Controllers\LarablendCrudController;
 
 class CarriersController extends LarablendCrudController
 {
+    public static function sort_table(Request $request, $model, $id){
+        $max_date = $request->max_date;
+        $min_date = $request->min_date;
+
+        $carriers = Carrier::join('profiles As profile','profile.id','carriers.profile_id')
+        ->join('addresses As address','address.id','carriers.address_id')
+        ->where('carriers.created_at','>=',$min_date)
+        ->where('carriers.created_at','<=',$max_date)
+        ->get(['name','profile.email','userProfile_photo','nid_no','address_line_1','carriers.created_at']);
+        $request->session()->flash('data', $carriers);
+        $request->session()->flash('model', 'carrier');
+        return redirect()->back();
+    }
+
     public static function withoutTruck_WithoutDriver(){
         $carriers_without_driver = Carrier::leftJoin('booking_requests','booking_requests.carrier_id','carriers.id')
         ->where('driver_id',null)

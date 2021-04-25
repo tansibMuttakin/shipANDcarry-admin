@@ -9,6 +9,20 @@ use Duoneos\Larablend\Http\Controllers\LarablendCrudController;
 
 class DriverController extends LarablendCrudController{
 
+    public static function sort_table(Request $request, $model, $id){
+        $max_date = $request->max_date;
+        $min_date = $request->min_date;
+
+        $drivers = Driver::join('profiles As profile','profile.id','drivers.profile_id')
+        ->join('addresses As address','address.id','drivers.address_id')
+        ->where('drivers.created_at','>=',$min_date)
+        ->where('drivers.created_at','<=',$max_date)
+        ->get(['name','profile.email','userProfile_photo','nid_no','address_line_1','driving_license_no','registered_by_carrier','drivers.created_at']);
+        $request->session()->flash('data', $drivers);
+        $request->session()->flash('model', 'driver');
+        return redirect()->back();
+    }
+
     public static function trip_history(){
         $drivers_history = BookingRequest::with('driver','carrier','vehicle.vehicle_brand','vehicle.vehicle_model','dropoff_address','pickup_address')->get();
         return view('drivers.history',['drivers_history' => $drivers_history]);

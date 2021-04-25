@@ -1,5 +1,6 @@
 @extends('larablend::layouts.app')
 @section('content')
+
 <div class="row" style="column-gap:2em;">
     <div class="card" style="width:16rem;">
         <div class="card-body">
@@ -124,48 +125,75 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Shippers</h4>
         <div class="card-body">
-            <table cellspacing="5" cellpadding="5">
-                <tbody>
-                    <tr>
-                        <td>Sort BY:</td>
-                        <td>
-                            <select name="range" onchange="filter(event)" id="shipper">
-                                <option value="" selected>Choose...</option>
-                                <option value="last_day">Last Day</option>
-                                <option value="last_week">Last Week</option>
-                                <option value="last_month">Last Month</option>
-                                <option value="last_year">Last year</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table id="shippers" class="table" style="width:100%">
-                <thead>
-                    <tr>
-                        <th class="pl-0">Name</th>
-                        <th class="pl-0">Email</th>
-                        <th class="pl-0">Gender</th>
-                        <th class="pl-0">NID</th>
-                        <th class="pl-0">Address</th>
-                        <th class="pl-0">Type</th>
-                        <th class="pl-0">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($shippers_data->shippers as $shipper)
+            <form action="/dashboard/shipper/sort_table" method="post">
+                @csrf
+                <div class="d-flex">
+                    <div class="form-group">
+                        <label for="shipper_max_date">Maximum Date</label>
+                        <input type="text" class="form-control" name="max_date" id="shipper_max_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                    <div class="form-group">
+                        <label for="shipper_min_date">Minimum Date</label>
+                        <input type="text" class="form-control" name="min_date" id="shipper_min_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sort</button>
+            </form>
+            @if (session('data') && session('model')=='shipper')
+                <table id="shippers" class="table" style="width:100%">
+                    <thead>
                         <tr>
-                            <td class="pl-0">{{$shipper->name?$shipper->name:'N/A'}}</td>
-                            <td class="pl-0">{{$shipper->profile->email?$shipper->profile->email:'N/A'}}</td>
-                            <td class="pl-0">{{$shipper->profile->gender?$shipper->profile->gender:'N/A'}}</td>
-                            <td class="pl-0">{{$shipper->nid_no?$shipper->nid_no:'N/A'}}</td>
-                            <td class="pl-0">{{$shipper->address->address_line_1?$shipper->address->address_line_1:'N/A'}}</td>
-                            <td class="pl-0">{{$shipper->user->type?$shipper->user->type:'N/A'}}</td>
-                            <td class="pl-0">{{$shipper->created_at?$shipper->created_at:'N/A'}}</td>
+                            <th class="pl-0">Name</th>
+                            <th class="pl-0">Email</th>
+                            <th class="pl-0">Gender</th>
+                            <th class="pl-0">NID</th>
+                            <th class="pl-0">Address</th>
+                            <th class="pl-0">Type</th>
+                            <th class="pl-0">Date</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (session('data') as $shipper)
+                            <tr>
+                                <td class="pl-0">{{$shipper->name?$shipper->name:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->email?$shipper->email:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->gender?$shipper->gender:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->nid_no?$shipper->nid_no:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->address_line_1?$shipper->address_line_1:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->type?$shipper->type:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->created_at?$shipper->created_at:'N/A'}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <table id="shippers" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="pl-0">Name</th>
+                            <th class="pl-0">Email</th>
+                            <th class="pl-0">Gender</th>
+                            <th class="pl-0">NID</th>
+                            <th class="pl-0">Address</th>
+                            <th class="pl-0">Type</th>
+                            <th class="pl-0">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($shippers_data->shippers as $shipper)
+                            <tr>
+                                <td class="pl-0">{{$shipper->name?$shipper->name:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->profile->email?$shipper->profile->email:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->profile->gender?$shipper->profile->gender:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->nid_no?$shipper->nid_no:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->address->address_line_1?$shipper->address->address_line_1:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->user->type?$shipper->user->type:'N/A'}}</td>
+                                <td class="pl-0">{{$shipper->created_at?$shipper->created_at:'N/A'}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 </div>
@@ -173,22 +201,21 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Carriers</h4>
         <div class="card-body">
-            <table cellspacing="5" cellpadding="5">
-                <tbody>
-                    <tr>
-                        <td>Sort BY:</td>
-                        <td>
-                            <select name="range" onchange="filter(event)" id="carrier">
-                                <option value="" selected>Choose...</option>
-                                <option value="last_day">Last Day</option>
-                                <option value="last_week">Last Week</option>
-                                <option value="last_month">Last Month</option>
-                                <option value="last_year">Last year</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <form action="/dashboard/carrier/sort_table" method="post">
+                @csrf
+                <div class="d-flex">
+                    <div class="form-group">
+                        <label for="carrier_max_date">Maximum Date</label>
+                        <input type="text" class="form-control" name="max_date" id="carrier_max_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                    <div class="form-group">
+                        <label for="carrier_min_date">Minimum Date</label>
+                        <input type="text" class="form-control" name="min_date" id="carrier_min_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sort</button>
+            </form>
+            @if (session('data') && session('model')=='carrier')
             <table id="carriers" class="table" style="width:100%">
                 <thead>
                     <tr>
@@ -201,18 +228,44 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($carriers_data->carriers as $carrier)
+                    @foreach (session('data') as $carrier)
                         <tr>
                             <td class="pl-0">{{$carrier->name?$carrier->name:'n/a'}}</td>
-                            <td class="pl-0">{{$carrier->profile->email?$carrier->profile->email:'n/a'}}</td>
+                            <td class="pl-0">{{$carrier->email?$carrier->email:'n/a'}}</td>
                             <td class="pl-0">{{$carrier->userProfile_photo?$carrier->userProfile_photo:'n/a'}}</td>
                             <td class="pl-0">{{$carrier->nid_no?$carrier->nid_no:'n/a'}}</td>
-                            <td class="pl-0">{{$carrier->address->address_line_1?$carrier->address->address_line_1:'n/a'}}</td>
+                            <td class="pl-0">{{$carrier->address_line_1?$carrier->address_line_1:'n/a'}}</td>
                             <td class="pl-0">{{$carrier->created_at?$carrier->created_at:'n/a'}}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            @else
+                <table id="carriers" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="pl-0">Name</th>
+                            <th class="pl-0">Email</th>
+                            <th class="pl-0">Photo</th>
+                            <th class="pl-0">NID</th>
+                            <th class="pl-0">Address</th>
+                            <th class="pl-0">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($carriers_data->carriers as $carrier)
+                            <tr>
+                                <td class="pl-0">{{$carrier->name?$carrier->name:'n/a'}}</td>
+                                <td class="pl-0">{{$carrier->profile->email?$carrier->profile->email:'n/a'}}</td>
+                                <td class="pl-0">{{$carrier->userProfile_photo?$carrier->userProfile_photo:'n/a'}}</td>
+                                <td class="pl-0">{{$carrier->nid_no?$carrier->nid_no:'n/a'}}</td>
+                                <td class="pl-0">{{$carrier->address->address_line_1?$carrier->address->address_line_1:'n/a'}}</td>
+                                <td class="pl-0">{{$carrier->created_at?$carrier->created_at:'n/a'}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 </div>
@@ -220,22 +273,21 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Drivers</h4>
         <div class="card-body">
-            <table cellspacing="5" cellpadding="5">
-                <tbody>
-                    <tr>
-                        <td>Sort BY:</td>
-                        <td>
-                            <select name="range" onchange="filter(event)" id="driver">
-                                <option value="" selected>Choose...</option>
-                                <option value="last_day">Last Day</option>
-                                <option value="last_week">Last Week</option>
-                                <option value="last_month">Last Month</option>
-                                <option value="last_year">Last year</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <form action="/dashboard/driver/sort_table" method="post">
+                @csrf
+                <div class="d-flex">
+                    <div class="form-group">
+                        <label for="driver_max_date">Maximum Date</label>
+                        <input type="text" class="form-control" name="max_date" id="driver_max_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                    <div class="form-group">
+                        <label for="driver_min_date">Minimum Date</label>
+                        <input type="text" class="form-control" name="min_date" id="driver_min_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sort</button>
+            </form>
+            @if (session('data') && session('model') =='driver')
             <table id="drivers" class="table" style="width:100%">
                 <thead>
                     <tr>
@@ -246,26 +298,58 @@
                         <th class="pl-0">Address</th>
                         <th class="pl-0">Driving License</th>
                         <th class="pl-0">Registered By</th>
-                        <th class="pl-0">Status</th>
+                        <th class="pl-0">On Trip</th>
                         <th class="pl-0">Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($drivers as $driver)
+                    @foreach (session('data') as $driver)
                         <tr>
                             <td class="pl-0">{{$driver->name?$driver->name:'n/a'}}</td>
-                            <td class="pl-0">{{$driver->profile->email?$driver->profile->email:'n/a'}}</td>
+                            <td class="pl-0">{{$driver->email?$driver->email:'n/a'}}</td>
                             <td class="pl-0">{{$driver->userProfile_photo?$driver->userProfile_photo:'n/a'}}</td>
                             <td class="pl-0">{{$driver->nid_no?$driver->nid_no:'n/a'}}</td>
-                            <td class="pl-0">{{$driver->address->address_line_1?$driver->address->address_line_1:'n/a'}}</td>
+                            <td class="pl-0">{{$driver->address_line_1?$driver->address_line_1:'n/a'}}</td>
                             <td class="pl-0">{{$driver->driving_license_no?$driver->driving_license_no:'n/a'}}</td>
-                            <td class="pl-0">{{$driver->registered_by_carrier?'carrier':'self-registered'}}</td>
-                            <td class="pl-0">{{$driver->profile->active?'active':'inactive'}}</td>
+                            <td class="pl-0">{{$driver->registered_by_carrier?$driver->registered_by_carrier:'n/a'}}</td>
+                            <td class="pl-0">{{$driver->onTrip?'yes':'no'}}</td>
                             <td class="pl-0">{{$driver->created_at?$driver->created_at:'n/a'}}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            @else
+                <table id="drivers" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="pl-0">Name</th>
+                            <th class="pl-0">Email</th>
+                            <th class="pl-0">Photo</th>
+                            <th class="pl-0">NID</th>
+                            <th class="pl-0">Address</th>
+                            <th class="pl-0">Driving License</th>
+                            <th class="pl-0">Registered By</th>
+                            <th class="pl-0">On Trip</th>
+                            <th class="pl-0">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($drivers as $driver)
+                            <tr>
+                                <td class="pl-0">{{$driver->name?$driver->name:'n/a'}}</td>
+                                <td class="pl-0">{{$driver->profile->email?$driver->profile->email:'n/a'}}</td>
+                                <td class="pl-0">{{$driver->userProfile_photo?$driver->userProfile_photo:'n/a'}}</td>
+                                <td class="pl-0">{{$driver->nid_no?$driver->nid_no:'n/a'}}</td>
+                                <td class="pl-0">{{$driver->address->address_line_1?$driver->address->address_line_1:'n/a'}}</td>
+                                <td class="pl-0">{{$driver->driving_license_no?$driver->driving_license_no:'n/a'}}</td>
+                                <td class="pl-0">{{$driver->registered_by_carrier?'carrier':'self-registered'}}</td>
+                                <td class="pl-0">{{$driver->onTrip?'yes':'no'}}</td>
+                                <td class="pl-0">{{$driver->created_at?$driver->created_at:'n/a'}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 </div>
@@ -273,75 +357,111 @@
     <div class="card" style="width:100%">
         <h4 class="card-category text-left p-4 font-weight-bold">Registered Vehicles</h4>
         <div class="card-body">
-            <table cellspacing="5" cellpadding="5">
-                <tbody>
-                    <tr>
-                        <td>Sort BY:</td>
-                        <td>
-                            <select name="range" onchange="filter(event)" id="vehicle">
-                                <option value="" selected>Choose...</option>
-                                <option value="last_day">Last Day</option>
-                                <option value="last_week">Last Week</option>
-                                <option value="last_month">Last Month</option>
-                                <option value="last_year">Last year</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table id="vehicles" class="table" style="width:100%">
-                <thead>
-                    <tr>
-                        <th class="pl-0">Owner Name</th>
-                        <th class="pl-0">Model</th>
-                        <th class="pl-0">Brand</th>
-                        <th class="pl-0">Type</th>
-                        <th class="pl-0">Reg NO</th>
-                        <th class="pl-0">BRTA NO</th>
-                        <th class="pl-0">Fitness NO</th>
-                        <th class="pl-0">Location</th>
-                        <th class="pl-0">On Trip</th>
-                        <th class="pl-0">Reg Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($vehicles as $vehicle)
+            <form action="/dashboard/vehicle/sort_table" method="post">
+                @csrf
+                <div class="d-flex">
+                    <div class="form-group">
+                        <label for="vehicle_max_date">Maximum Date</label>
+                        <input type="text" class="form-control" name="max_date" id="vehicle_max_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle_min_date">Minimum Date</label>
+                        <input type="text" class="form-control" name="min_date" id="vehicle_min_date" aria-describedby="helpId" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sort</button>
+            </form>
+            @if (session('data') && session('model')=='vehicle')
+                <table id="vehicles_table" class="table" style="width:100%">
+                    <thead>
                         <tr>
-                            <td class="pl-0">{{$vehicle->owner_name?$vehicle->owner_name:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->vehicle_model->name?$vehicle->vehicle_model->name:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->vehicle_brand->name?$vehicle->vehicle_brand->name:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->vehicle_type->name?$vehicle->vehicle_type->name:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->registration_no?$vehicle->registration_no:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->brta_certificate_no?$vehicle->brta_certificate_no:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->fitness_certificate_no?$vehicle->fitness_certificate_no:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->address->address_line_1?$vehicle->address->city:'n/a'}}</td>
-                            <td class="pl-0">{{$vehicle->onTrip?'yes':'no'}}</td>
-                            <td class="pl-0">{{$vehicle->created_at?$vehicle->created_at:'n/a'}}</td>
+                            <th class="pl-0">Owner Name</th>
+                            <th class="pl-0">Model</th>
+                            <th class="pl-0">Brand</th>
+                            <th class="pl-0">Type</th>
+                            <th class="pl-0">Reg NO</th>
+                            <th class="pl-0">BRTA NO</th>
+                            <th class="pl-0">Fitness NO</th>
+                            <th class="pl-0">Location</th>
+                            <th class="pl-0">On Trip</th>
+                            <th class="pl-0">Reg Date</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (session('data') as $vehicle)
+                            <tr>
+                                <td class="pl-0">{{$vehicle->owner_name?$vehicle->owner_name:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->model?$vehicle->model:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->brand?$vehicle->brand:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->type?$vehicle->type:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->registration_no?$vehicle->registration_no:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->brta_certificate_no?$vehicle->brta_certificate_no:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->fitness_certificate_no?$vehicle->fitness_certificate_no:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->address_line_1?$vehicle->address_line_1:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->onTrip?'yes':'no'}}</td>
+                                <td class="pl-0">{{$vehicle->created_at?$vehicle->created_at:'n/a'}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <table id="vehicles_table" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="pl-0">Owner Name</th>
+                            <th class="pl-0">Model</th>
+                            <th class="pl-0">Brand</th>
+                            <th class="pl-0">Type</th>
+                            <th class="pl-0">Reg NO</th>
+                            <th class="pl-0">BRTA NO</th>
+                            <th class="pl-0">Fitness NO</th>
+                            <th class="pl-0">Location</th>
+                            <th class="pl-0">On Trip</th>
+                            <th class="pl-0">Reg Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($vehicles as $vehicle)
+                            <tr>
+                                <td class="pl-0">{{$vehicle->owner_name?$vehicle->owner_name:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->vehicle_model->name?$vehicle->vehicle_model->name:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->vehicle_brand->name?$vehicle->vehicle_brand->name:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->vehicle_type->name?$vehicle->vehicle_type->name:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->registration_no?$vehicle->registration_no:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->brta_certificate_no?$vehicle->brta_certificate_no:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->fitness_certificate_no?$vehicle->fitness_certificate_no:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->address->address_line_1?$vehicle->address->city:'n/a'}}</td>
+                                <td class="pl-0">{{$vehicle->onTrip?'yes':'no'}}</td>
+                                <td class="pl-0">{{$vehicle->created_at?$vehicle->created_at:'n/a'}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 </div>
-
 @endsection
 @section('custom-inline-script')
 $(document).ready(function() {
-    $('.table').DataTable({
+    $('#shippers').DataTable({
         "lengthMenu": [ 5, 10, 15, 20],
         "sort":false,
     });
-    
-    
-} );
-function filter(event){
-    axios.get(`/dashboard/${event.target.id}/sort_table/${event.target.value}`)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      }) 
-}
+
+    $('#carriers').DataTable({
+        "lengthMenu": [ 5, 10, 15, 20],
+        "sort":false,
+    }); 
+
+    $('#drivers').DataTable({
+        "lengthMenu": [ 5, 10, 15, 20],
+        "sort":false,
+    }); 
+
+    $('#vehicles_table').DataTable({
+        "lengthMenu": [ 5, 10, 15, 20],
+        "sort":false,
+    });  
+});
 @endsection
