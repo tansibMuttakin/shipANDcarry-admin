@@ -13,6 +13,10 @@ class DriverController extends LarablendCrudController{
         $max_date = $request->max_date;
         $min_date = $request->min_date;
 
+        if ($max_date==null || $min_date==null) {
+            return redirect()->back()->with('message','Range not defined')->with('model','driver');
+        }
+
         $drivers = Driver::join('profiles As profile','profile.id','drivers.profile_id')
         ->join('addresses As address','address.id','drivers.address_id')
         ->where('drivers.created_at','>=',$min_date)

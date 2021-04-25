@@ -167,6 +167,9 @@
                     </tbody>
                 </table>
             @else
+                @if (session('model')=='shipper')
+                    @include('larablend::components.flash')
+                @endif
                 <table id="shippers" class="table" style="width:100%">
                     <thead>
                         <tr>
@@ -241,6 +244,9 @@
                 </tbody>
             </table>
             @else
+                @if (session('model')=='carrier')
+                    @include('larablend::components.flash')
+                @endif
                 <table id="carriers" class="table" style="width:100%">
                     <thead>
                         <tr>
@@ -319,6 +325,9 @@
                 </tbody>
             </table>
             @else
+                @if (session('model')=='driver')
+                    @include('larablend::components.flash')
+                @endif
                 <table id="drivers" class="table" style="width:100%">
                     <thead>
                         <tr>
@@ -405,6 +414,9 @@
                     </tbody>
                 </table>
             @else
+                @if (session('model')=='vehicle')
+                    @include('larablend::components.flash')
+                @endif
                 <table id="vehicles_table" class="table" style="width:100%">
                     <thead>
                         <tr>

@@ -23,6 +23,10 @@ class CarriersController extends LarablendCrudController
         $max_date = $request->max_date;
         $min_date = $request->min_date;
 
+        if ($max_date==null || $min_date==null) {
+            return redirect()->back()->with('message','Range not defined')->with('model','carrier');
+        }
+
         $carriers = Carrier::join('profiles As profile','profile.id','carriers.profile_id')
         ->join('addresses As address','address.id','carriers.address_id')
         ->where('carriers.created_at','>=',$min_date)

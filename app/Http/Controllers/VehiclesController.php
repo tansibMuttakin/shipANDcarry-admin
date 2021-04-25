@@ -25,6 +25,10 @@ class VehiclesController extends LarablendCrudController
         $max_date = $request->max_date;
         $min_date = $request->min_date;
 
+        if ($max_date==null || $min_date==null) {
+            return redirect()->back()->with('message','Range not defined')->with('model','vehicle');
+        }
+
         $vehicles = Vehicle::join('vehicle_models As vm','vm.id','vehicles.vehicle_model_id')
         ->join('vehicle_types As vt','vt.id','vehicles.vehicle_type_id')
         ->join('vehicle_brands As vb','vb.id','vehicles.vehicle_brand_id')

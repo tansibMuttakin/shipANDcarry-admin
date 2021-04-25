@@ -35,6 +35,9 @@ class ShippersController extends LarablendCrudController
     public static function sort_table(Request $request, $model, $id){
         $max_date = $request->max_date;
         $min_date = $request->min_date;
+        if ($max_date==null || $min_date==null) {
+            return redirect()->back()->with('message','Range not defined')->with('model','shipper');
+        }
 
         $shippers = Shipper::join('users As user','user.id','shippers.user_id')
         ->join('profiles As profile','profile.id','shippers.profile_id')
@@ -46,38 +49,5 @@ class ShippersController extends LarablendCrudController
         $request->session()->flash('model', 'shipper');
         return redirect()->back();
 
-        // $yesterday = Carbon::yesterday();
-
-        // $previous_week = strtotime("-1 week +1 day");
-        // $start_week = strtotime("last sunday midnight",$previous_week);
-        // $end_week = strtotime("next saturday",$start_week);
-        // $start_week = date("Y-m-d",$start_week);
-        // $end_week = date("Y-m-d",$end_week);
-
-        // $last_month = Carbon::now()->subMonth()->month;
-        // $last_year = Carbon::now()->subYear()->year;
-
-
-        // switch ($id) {
-        //     case 'last_day':
-        //         $shippers = Shipper::where('created_at','>=',$yesterday)->get();
-        //         dd($shippers);
-        //         break;
-            
-        //     case 'last_week':
-        //         $shippers = Shipper::whereBetween('created_at',[$start_week,$end_week])->get();
-        //         dd($shippers);
-        //         break;
-            
-        //     case 'last_month':
-        //         $shippers = Shipper::whereMonth('created_at','=',$last_month)->get();
-        //         dd($shippers);
-        //         break;
-            
-        //     case 'last_year':
-        //         $shippers = Shipper::whereYear('created_at','=',$last_year)->get();
-        //         dd($shippers);
-        //         break;
-        // }
     }
 }
